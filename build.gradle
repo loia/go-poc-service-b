@@ -16,12 +16,15 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'http://repo.spring.io/milestone' }
 }
+
+group = 'com.loia.api'
+version = '1.0'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -33,4 +36,12 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"
 
     testCompile group: 'junit', name: 'junit', version:'4.11'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
