@@ -24,7 +24,8 @@ repositories {
 }
 
 group = 'com.loia.api'
-version = '1.0'
+baseVersion = '1.0'
+version = getVersion(baseVersion)
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -44,4 +45,16 @@ publishing {
             from components.java
         }
     }
+}
+
+def getVersion(baseVersion) {
+    def buildCounter = System.getenv("GO_PIPELINE_COUNTER")
+    if (buildCounter == null) {
+        version = baseVersion
+    } else {
+        version = baseVersion + '-' + buildCounter
+    }
+
+    println 'Version: ' + version
+    return version
 }
